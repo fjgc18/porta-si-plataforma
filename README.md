@@ -23,7 +23,7 @@ porta-si/
 | Base de Datos | MySQL 8, 14 tablas, vistas SQL, índices optimizados |
 | Infraestructura | Docker, Docker Compose, Nginx |
 
-## 🚀 Instalación Local
+##  Instalación Local
 
 ### Prerrequisitos
 - Java 21+ (JDK)
@@ -63,14 +63,14 @@ npm run dev
 ```
 Disponible en: http://localhost:5174
 
-## 🐳 Docker
+##  Docker
 ```bash
 cd docker
 cp .env.example .env
 docker compose up -d --build
 ```
 
-## 👤 Usuarios Demo
+##  Usuarios Demo
 
 | Email | Contraseña | Rol |
 |-------|-----------|-----|
@@ -79,7 +79,7 @@ docker compose up -d --build
 | iarce@portasi.com | 123456 | EMPLEADO |
 | daguilar@portasi.com | 123456 | EMPLEADO |
 
-## 📡 API Endpoints
+##  API Endpoints
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
@@ -97,7 +97,7 @@ docker compose up -d --build
 | GET | /api/v1/reportes/resumen | Dashboard KPIs |
 | GET | /api/v1/reportes/ventas-por-mes | Reporte ventas |
 
-## 🔒 Seguridad
+##  Seguridad
 - JWT Authentication con BCrypt
 - Spring Security con roles (ADMIN, EMPLEADO)
 - Protección CORS configurada
@@ -105,18 +105,18 @@ docker compose up -d --build
 - Manejo global de excepciones
 - Soft delete en entidades principales
 
-## 📊 Módulos
-- ✅ Dashboard con KPIs y gráficas
-- ✅ Gestión de Usuarios (CRUD + activar/desactivar)
-- ✅ Gestión de Clientes (CRUD + búsqueda + RFC)
-- ✅ Gestión de Inmuebles (CRUD + filtros + imágenes + paginación)
-- ✅ Gestión de Ventas (registro + cambio automático estado)
-- ✅ Gestión de Rentas (contratos + renovaciones)
-- ✅ Gestión de Pagos (registro + historial)
-- ✅ Reportes (gráficas + estadísticas)
-- ✅ Portal Público (landing + catálogo + detalle + contacto)
+##  Módulos
+-  Dashboard con KPIs y gráficas
+-  Gestión de Usuarios (CRUD + activar/desactivar)
+-  Gestión de Clientes (CRUD + búsqueda + RFC)
+-  Gestión de Inmuebles (CRUD + filtros + imágenes + paginación)
+-  Gestión de Ventas (registro + cambio automático estado)
+-  Gestión de Rentas (contratos + renovaciones)
+-  Gestión de Pagos (registro + historial)
+-  Reportes (gráficas + estadísticas)
+-  Portal Público (landing + catálogo + detalle + contacto)
 
-## 👥 Equipo
+##  Equipo
 - Kevin Edgardo Espinoza Camargo
 - Francisco Javier González Castro
 - Iván Enrique Arce Baldenebro
