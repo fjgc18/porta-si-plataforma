@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: portasi-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-portasi2026}
+      MYSQL_DATABASE: porta_si
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../database/porta_si_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ../database/porta_si_seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend-api
+      dockerfile: ../docker/Dockerfile.backend
+    container_name: portasi-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/porta_si?useSSL=false&serverTimezone=America/Hermosillo&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD:-portasi2026}
+      APP_JWT_SECRET: ${JWT_SECRET:-portaSI_SecretKey_2026_Docker_Production}
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads_data:/app/uploads
+
+  admin:
+    build:
+      context: ../admin-panel
+      dockerfile: ../docker/Dockerfile.admin
+    container_name: portasi-admin
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+
+  portal:
+    build:
+      context: ../client-portal
+      dockerfile: ../docker/Dockerfile.portal
+    container_name: portasi-portal
+    restart: unless-stopped
+    ports:
+      - "5174:80"
+
+volumes:
+  mysql_data:
+  uploads_data:
