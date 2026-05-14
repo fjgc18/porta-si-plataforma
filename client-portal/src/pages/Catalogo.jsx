@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getCatalogo } from '../services/api'
+import { assetUrl, getCatalogo } from '../services/api'
 import { formatMoney } from '../utils/formatters'
 import { Search, MapPin, Bed, Bath, Car, Maximize } from 'lucide-react'
 
@@ -34,7 +34,7 @@ export default function Catalogo() {
           {filtered.map(i => (
             <Link to={`/catalogo/${i.id}`} key={i.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300">
               <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
-                {i.imagenes?.length > 0 ? <img src={i.imagenes[0].url} alt={i.titulo} className="w-full h-full object-cover"/> : <div className="text-slate-300 text-4xl font-bold">{i.tipo?.[0]}</div>}
+                {i.imagenes?.length > 0 ? <img src={assetUrl(i.imagenes[0].url)} alt={i.titulo} className="w-full h-full object-cover"/> : <div className="text-slate-300 text-4xl font-bold">{i.tipo?.[0]}</div>}
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-1 text-xs text-gray-400 mb-2"><MapPin size={12}/>{i.ciudad}, {i.estadoGeo}</div>

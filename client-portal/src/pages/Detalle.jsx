@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getDetalle } from '../services/api'
+import { assetUrl, getDetalle } from '../services/api'
 import { formatMoney } from '../utils/formatters'
 import { MapPin, Bed, Bath, Car, Maximize, ArrowLeft, Phone, Mail } from 'lucide-react'
 
@@ -19,9 +19,9 @@ export default function Detalle() {
           <div className="lg:col-span-2">
             {/* Gallery */}
             <div className="h-80 lg:h-[420px] bg-gradient-to-br from-slate-100 to-slate-50 rounded-2xl overflow-hidden mb-6">
-              {data.imagenes?.length > 0 ? <img src={data.imagenes[0].url} alt={data.titulo} className="w-full h-full object-cover"/> : <div className="w-full h-full flex items-center justify-center text-slate-300 text-6xl font-bold">{data.tipo?.[0]}</div>}
+              {data.imagenes?.length > 0 ? <img src={assetUrl(data.imagenes[0].url)} alt={data.titulo} className="w-full h-full object-cover"/> : <div className="w-full h-full flex items-center justify-center text-slate-300 text-6xl font-bold">{data.tipo?.[0]}</div>}
             </div>
-            {data.imagenes?.length > 1 && <div className="grid grid-cols-4 gap-2 mb-6">{data.imagenes.slice(1,5).map((img,i)=><div key={i} className="h-20 rounded-lg overflow-hidden bg-gray-100"><img src={img.url} alt="" className="w-full h-full object-cover"/></div>)}</div>}
+            {data.imagenes?.length > 1 && <div className="grid grid-cols-4 gap-2 mb-6">{data.imagenes.slice(1,5).map((img,i)=><div key={i} className="h-20 rounded-lg overflow-hidden bg-gray-100"><img src={assetUrl(img.url)} alt="" className="w-full h-full object-cover"/></div>)}</div>}
             {/* Info */}
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{data.titulo}</h1>
             <div className="flex items-center gap-1 text-gray-500 mb-4"><MapPin size={16}/>{data.direccion && `${data.direccion}, `}{data.ciudad}, {data.estadoGeo}</div>

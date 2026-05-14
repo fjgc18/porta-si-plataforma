@@ -2,8 +2,8 @@
 --  PORTA SI — Datos Semilla (Seed Data)
 -- ============================================================
 
-USE porta_si;
-
+ USE porta_si;
+ 
 -- Roles
 INSERT INTO roles (nombre, descripcion) VALUES
   ('ADMIN',    'Acceso total al sistema'),

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getInmuebles, createInmueble, updateInmueble, deleteInmueble, getTipos, getEstados, togglePublicado } from '../../services/endpoints'
+import { assetUrl } from '../../services/api'
 import { Plus, Edit, Trash2, Eye, EyeOff, Search, ImagePlus, X } from 'lucide-react'
 import { formatMoney } from '../../utils/formatters'
 import toast from 'react-hot-toast'
@@ -78,7 +79,7 @@ export default function Inmuebles() {
           <div className="grid grid-cols-3 gap-3 mb-6">
             {imageModal.imagenes.map(img => (
               <div key={img.id} className="relative group rounded-lg overflow-hidden border border-slate-700 bg-slate-800 aspect-video">
-                <img src={img.url} className="w-full h-full object-cover" alt="inmueble" />
+                <img src={assetUrl(img.url)} className="w-full h-full object-cover" alt="inmueble" />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
                   <button type="button" onClick={()=>handleDeleteImagen(img.id)} className="bg-red-500/80 hover:bg-red-500 text-white p-2 rounded-full"><Trash2 size={14}/></button>
                 </div>
