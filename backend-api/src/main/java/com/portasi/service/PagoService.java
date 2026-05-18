@@ -38,6 +38,26 @@ public class PagoService {
         return toResponse(pagoRepo.save(b.build()));
     }
 
+    @Transactional
+    public PagoResponse actualizar(Long id, PagoRequest req) {
+        Pago p = pagoRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pago", id));
+        p.setTipoReferencia(Pago.TipoReferencia.valueOf(req.getTipoReferencia()));
+        p.setMonto(req.getMonto());
+        p.setFechaPago(req.getFechaPago());
+        p.setMetodoPago(req.getMetodoPago() != null ? MetodoPagoSimple.valueOf(req.getMetodoPago()) : p.getMetodoPago());
+        p.setEstado(req.getEstado() != null ? EstadoPago.valueOf(req.getEstado()) : p.getEstado());
+        p.setConcepto(req.getConcepto());
+        if (req.getIdVenta() != null) p.setVenta(ventaRepo.findById(req.getIdVenta()).orElse(null));
+        if (req.getIdRenta() != null) p.setRenta(rentaRepo.findById(req.getIdRenta()).orElse(null));
+        return toResponse(pagoRepo.save(p));
+    }
+
+    @Transactional
+    public void eliminar(Long id) {
+        Pago p = pagoRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pago", id));
+        pagoRepo.delete(p);
+    }
+
     private PagoResponse toResponse(Pago p) {
         String folioRef = p.getVenta() != null ? p.getVenta().getFolio() : (p.getRenta() != null ? p.getRenta().getFolio() : "N/A");
         String inmueble = p.getVenta() != null ? p.getVenta().getInmueble().getTitulo() : (p.getRenta() != null ? p.getRenta().getInmueble().getTitulo() : "N/A");

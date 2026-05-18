@@ -66,6 +66,29 @@ public class VentaService {
         return toResponse(v);
     }
 
+    @Transactional
+    public VentaResponse actualizar(Long id, VentaRequest req) {
+        Venta v = ventaRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Venta", id));
+        v.setPrecioFinal(req.getPrecioFinal());
+        v.setMetodoPago(req.getMetodoPago() != null ? MetodoPago.valueOf(req.getMetodoPago()) : v.getMetodoPago());
+        v.setAnticipo(req.getAnticipo());
+        v.setEstadoPago(req.getEstadoPago() != null ? EstadoPago.valueOf(req.getEstadoPago()) : v.getEstadoPago());
+        v.setFechaVenta(req.getFechaVenta());
+        v.setObservaciones(req.getObservaciones());
+        return toResponse(ventaRepo.save(v));
+    }
+
+    @Transactional
+    public void eliminar(Long id) {
+        Venta v = ventaRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Venta", id));
+        // Restaurar inmueble a Disponible
+        EstadoInmueble disponible = estadoInmuebleRepo.findByNombre("Disponible")
+                .orElseThrow(() -> new BusinessException("Estado Disponible no configurado"));
+        v.getInmueble().setEstado(disponible);
+        inmuebleRepo.save(v.getInmueble());
+        ventaRepo.delete(v);
+    }
+
     private VentaResponse toResponse(Venta v) {
         return VentaResponse.builder()
                 .id(v.getId()).folio(v.getFolio())

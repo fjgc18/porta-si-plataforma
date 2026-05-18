@@ -47,4 +47,10 @@ public class RentaController {
     public ResponseEntity<ApiResponse<RentaResponse>> renovar(@PathVariable Long id, @Valid @RequestBody RentaRequest req) {
         return ResponseEntity.ok(ApiResponse.ok("Contrato renovado", rentaService.renovar(id, req)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
+        rentaService.eliminar(id);
+        return ResponseEntity.ok(ApiResponse.ok("Renta eliminada", null));
+    }
 }

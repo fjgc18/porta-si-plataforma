@@ -32,4 +32,15 @@ public class PagoController {
         Long idUsuario = usuarioRepo.findByEmail(ud.getUsername()).orElseThrow().getId();
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok("Pago registrado", pagoService.registrar(req, idUsuario)));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PagoResponse>> actualizar(@PathVariable Long id, @Valid @RequestBody PagoRequest req) {
+        return ResponseEntity.ok(ApiResponse.ok("Pago actualizado", pagoService.actualizar(id, req)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
+        pagoService.eliminar(id);
+        return ResponseEntity.ok(ApiResponse.ok("Pago eliminado", null));
+    }
 }

@@ -75,6 +75,16 @@ public class RentaService {
         return crear(req, original.getAgente().getId());
     }
 
+    @Transactional
+    public void eliminar(Long id) {
+        Renta r = rentaRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Renta", id));
+        EstadoInmueble disponible = estadoInmuebleRepo.findByNombre("Disponible")
+                .orElseThrow(() -> new BusinessException("Estado Disponible no configurado"));
+        r.getInmueble().setEstado(disponible);
+        inmuebleRepo.save(r.getInmueble());
+        rentaRepo.delete(r);
+    }
+
     private RentaResponse toResponse(Renta r) {
         return RentaResponse.builder()
             .id(r.getId()).folio(r.getFolio())

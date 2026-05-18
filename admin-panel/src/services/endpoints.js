@@ -36,6 +36,8 @@ export const deleteImagen = id => api.delete(`/inmuebles/imagenes/${id}`)
 export const getVentas = params => api.get('/ventas', { params })
 export const getVenta = id => api.get(`/ventas/${id}`)
 export const createVenta = data => api.post('/ventas', data)
+export const updateVenta = (id, data) => api.put(`/ventas/${id}`, data)
+export const deleteVenta = id => api.delete(`/ventas/${id}`)
 
 // Rentas
 export const getRentas = () => api.get('/rentas')
@@ -43,10 +45,13 @@ export const getRenta = id => api.get(`/rentas/${id}`)
 export const createRenta = data => api.post('/rentas', data)
 export const updateRenta = (id, data) => api.put(`/rentas/${id}`, data)
 export const renovarRenta = (id, data) => api.patch(`/rentas/${id}/renovar`, data)
+export const deleteRenta = id => api.delete(`/rentas/${id}`)
 
 // Pagos
 export const getPagos = () => api.get('/pagos')
 export const createPago = data => api.post('/pagos', data)
+export const updatePago = (id, data) => api.put(`/pagos/${id}`, data)
+export const deletePago = id => api.delete(`/pagos/${id}`)
 
 // Reportes
 export const getResumen = () => api.get('/reportes/resumen')

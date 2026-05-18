@@ -40,4 +40,15 @@ public class VentaController {
         Long idVendedor = usuarioRepo.findByEmail(ud.getUsername()).orElseThrow().getId();
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok("Venta registrada", ventaService.registrar(req, idVendedor)));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<VentaResponse>> actualizar(@PathVariable Long id, @Valid @RequestBody VentaRequest req) {
+        return ResponseEntity.ok(ApiResponse.ok("Venta actualizada", ventaService.actualizar(id, req)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
+        ventaService.eliminar(id);
+        return ResponseEntity.ok(ApiResponse.ok("Venta eliminada", null));
+    }
 }
